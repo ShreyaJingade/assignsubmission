@@ -1,0 +1,38 @@
+create table cal(firstInput float, secondInput float, operator varchar, output float);
+CREATE PROCEDURE calci2
+	@firstInput float= 0,
+	@secondInput float= 0,
+	@operator varchar= NULL
+
+	as begin
+		
+		if @operator='+'
+		begin
+			insert into dbo.cal1 values(@firstInput, @secondInput, @operator, @firstInput+@secondInput);
+		end
+		
+		if @operator='-'
+		begin
+			insert into dbo.cal1 values(@firstInput, @secondInput, @operator, @firstInput-@secondInput)
+		end
+		
+		if @operator='*'
+		begin
+			insert into dbo.cal1 values(@firstInput, @secondInput, @operator, @firstInput*@secondInput)
+		end
+		
+		if @operator='/'
+		begin
+			if @secondInput=0
+			begin
+				print'Second Input cannot be zero'
+			end
+			else
+			begin
+				insert into dbo.cal1 values(@firstInput, @secondInput, @operator, @firstInput/@secondInput)
+			end
+		end
+	end
+
+exec calci2 2, 4,'/'
+select * from cal1
